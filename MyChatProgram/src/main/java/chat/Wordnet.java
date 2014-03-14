@@ -1,24 +1,27 @@
 package main.java.chat;
 
-//implemented by Barrett Sharpe
+//implemented by Kento Sera assisted by Barrett Sharpe
 
 import java.util.ArrayList;
 
 import edu.smu.tspell.wordnet.Synset;
+import edu.smu.tspell.wordnet.SynsetType;
 import edu.smu.tspell.wordnet.WordNetDatabase;
+import edu.smu.tspell.wordnet.WordNetException;
 
 public class Wordnet {
 
 	//Instances
-	private WordNetDatabase database1=null;
+	private WordNetDatabase d1 = null;
 	private Synset[] synsetList=null;
 
 	//constructor
-	public Wordnet(final String userInput){
+	public Wordnet(String word){
 		
-		System.setProperty("wordnet.database.dir", "/lib/dict/");
-		WordNetDatabase database1=WordNetDatabase.getFileInstance();
-		synsetList=database1.getSynsets(userInput);
+		System.setProperty("wordnet.database.dir", "lib/Wordnet/2.1/dict/");
+		d1 = WordNetDatabase.getFileInstance();
+		
+		synsetList=d1.getSynsets(word);
 	}
 	
 	//getSynonyms
@@ -45,24 +48,12 @@ public class Wordnet {
 			result[l]=stringTemp.get(l);
 		}
 		
-//		//output string[] result
+		//output string[] result
 //		System.out.println("This is the getSynonyms() result:\n");
 //		for(String s:result){
 //			System.out.println(s);
 //		}
 		return result;
 	}
-	
-//	//getSynonyms2
-//	public String[] getSynonyms2(){
-//		String[] result=database1.getBaseFormCandidates(userInput, synsetList);
-//	}
-	
-//	//getDefinition
-//	public String getDefinition(){
-//		Synset word=new Synset("the");
-//		//String def=synsetList[i].
-//		return null;
-//	}
 	
 }//class

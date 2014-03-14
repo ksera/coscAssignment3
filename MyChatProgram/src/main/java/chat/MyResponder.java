@@ -85,7 +85,7 @@ public final class MyResponder implements Responder
         			{
         		    	
         		    	
-        				String[] synonyms  = WordnetConnecter.getSynonyms(k);
+        				String[] synonyms  = new Wordnet(k).getSynonyms();
             			
             			if(synonyms == null){
             				synonymWord = "blank";
@@ -104,13 +104,12 @@ public final class MyResponder implements Responder
             				
             			for(int j = 0; j < synonyms.length; j++){
             				
-            				synonymWord = synonyms[j];
-            				
+            				synonymWord = synonyms[j];    
             			
-            					if( keyword.getWordMatch().equals( Keyword.MatchType.EXACT ) && word.equals( k )
-                						|| keyword.getWordMatch().equals( Keyword.MatchType.STARTS_WITH ) && word.startsWith( k ) 
-                						|| keyword.getWordMatch().equals( Keyword.MatchType.ENDS_WITH ) && word.endsWith( k )
-                						|| keyword.getWordMatch().equals( Keyword.MatchType.CONTAINS ) && word.contains( k ) )
+            					if( keyword.getWordMatch().equals( Keyword.MatchType.EXACT ) && (word.equals( k ) || word.equals(synonymWord))
+                						|| keyword.getWordMatch().equals( Keyword.MatchType.STARTS_WITH ) && (word.startsWith( k )  || word.equals(synonymWord))
+                						|| keyword.getWordMatch().equals( Keyword.MatchType.ENDS_WITH ) && (word.endsWith( k ) || word.equals(synonymWord))
+                						|| keyword.getWordMatch().equals( Keyword.MatchType.CONTAINS ) && (word.contains( k ) ) || word.equals(synonymWord))
                 				{
                 					respond = true;
                 					pickResponse(inputSentence, keyword.getResponses() );

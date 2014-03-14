@@ -24,15 +24,16 @@ public class POS {
 	private Sequence[] topSequences = null;
 	private String[] tags=null;
 	private String[] sent=null;
-	public enum Word_Type {Verb, Adjective};
 
 	public POS() {
 
 	}
 
 	@SuppressWarnings("deprecation")
-	public void init() {
+	public void init(String input) {
 
+		
+		
 		//instantiate POS
 		POSModel model = null;
 	
@@ -55,9 +56,12 @@ public class POS {
 		}
 		
 		POSTaggerME tagger = new POSTaggerME(model);
-		sent = new String[] { "Most", "large", "cities", "in",
-				"the", "US", "had", "morning", "and", "afternoon",
-				"newspapers", "." };
+//		sent = new String[] { "Most", "large", "cities", "in",
+//				"the", "US", "had", "morning", "and", "afternoon",
+//				"newspapers", "." };
+		
+		sent = input.split(" ");
+		
 		tags = tagger.tag(sent);
 		double probs[] = tagger.probs();
 		topSequences = tagger.topKSequences(sent);

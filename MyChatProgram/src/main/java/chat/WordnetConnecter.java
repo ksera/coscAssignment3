@@ -15,17 +15,28 @@ import edu.smu.tspell.wordnet.WordNetDatabase;
 
 public class WordnetConnecter {
 	
-	
 	private static WordNetDatabase database = null;
+	private static Synset[] synsetList=null;
+	
+	public WordnetConnecter(){
+		System.setProperty("wordnet.database.dir", "lib/Wordnet/2.1/dict/");
+		database = WordNetDatabase.getFileInstance();
+	}
+	
 	
 	
 	public static void initialize(){
-		if(database == null){
-			System.setProperty("wordnet.database.dir", "lib/Wordnet/2.1/dict/");
-			database = WordNetDatabase.getFileInstance();
-				
+		//create a wordform
+		
+		String wordForm = "";
+		
+		synsetList = database.getSynsets(wordForm);
+		for(int i = 0; i < synsetList.length; i++){
+			String[] wordForms = synsetList[i].getWordForms();
 		}
-	}
+				
+		
+	}//init
 	
 	//C:/Users/kento_s/Documents/cosc310newproj/MyChatProgram/lib/dict/
 	
@@ -42,11 +53,8 @@ public class WordnetConnecter {
 			WordNetDatabase database = WordNetDatabase.getFileInstance();
 			Synset[] synsets = null;
 			
-			do{
+
 				synsets = database.getSynsets(synsetString, SynsetType.NOUN);
-				
-			}
-			while(synsets == null);
 			 
 			
 
@@ -64,67 +72,16 @@ public class WordnetConnecter {
 				return wordForm;
 			
 	}
+
+public WordNetDatabase getDatabase() {
+	return database;
 }
 
 
 
-/*
+public Synset[] getSynsetList() {
+	return synsetList;
+}
 
-
-
-public static ArrayList<String> getSynonyms(final String word){
-	
-	initialize();
-	
-		NounSynset nounSynset; 
-		NounSynset[] hyponyms; 
-
-		String synsetString = word;
-		
-		//WordNetDatabase database = WordNetDatabase.getFileInstance(); 
-		Synset[] synsets = database.getSynsets("hi", SynsetType.NOUN); 
-		for (int i = 0; i < synsets.length; i++) { 
-		    nounSynset = (NounSynset)(synsets[i]); 
-		    hyponyms = nounSynset.getHyponyms(); 
-		    System.err.println(nounSynset.getWordForms()[0] + 
-		            ": " + nounSynset.getDefinition() + ") has " + hyponyms.length + " hyponyms"); 
-		
-	}
-	
-	
-	
-			
-	wordForm = new ArrayList<String>();
-	Synset[] synsets = database.getSynsets(synsetString);
-	    	
-	    	for (int i = 0; i < synsets.length; i++) { 
-	    		
-	    		for(String s : synsets[i].getWordForms()){
-	    			wordForm.add(s);
-	    		}
-	    		
-	    		
-	    	}
-	    	
-	    	if(wordForm.isEmpty()){   	    		
-	    		return null;
-	    	}
-	    	else{
-	    		HashSet<String> listToSet = new HashSet<String>(wordForm);
-    	    	ArrayList<String> wordFormFix = new ArrayList<String>(listToSet);
-    	    	
-    	    	return wordFormFix;
-	    	}
-	    		
-	    		
-	    	   
-	    	    
-			if( inputSentence.contains( keyword ) || keyword.equals( "" ) || inputSentence.contains(synonymString) )
-			{		
-				respond = true;	
-				print( randomFromArray( response.getResponses() ) );
-				i = synsets.length;
-				break search;
-			*/
-	
+}
 
